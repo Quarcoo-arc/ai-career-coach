@@ -40,3 +40,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 Tailwind CSS
 Shadcn
 Clerk - User Management
+Database - PostgresQL
+Inngest - Workflow execution & management
