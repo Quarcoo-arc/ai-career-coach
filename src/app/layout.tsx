@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Footer, Header } from "@/components/layout";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -21,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider afterSignOutUrl={"/"}>
+    <ClerkProvider appearance={{ theme: dark }} afterSignOutUrl={"/"}>
       <html lang="en" suppressHydrationWarning>
         <body className={`${openSans.variable}`}>
           <ThemeProvider
