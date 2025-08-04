@@ -32,7 +32,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-            <main className="min-h-dvh flex pt-20 pb-5">{children}</main>
+            <main className="min-h-dvh flex pt-20 pb-10">{children}</main>
             <Footer />
           </ThemeProvider>
         </body>

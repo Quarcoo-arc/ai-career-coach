@@ -1,3 +1,10 @@
+import { HeroSection } from "@/components/landing";
+
 export default function Home() {
-  return <div>Hey there!</div>;
+  return (
+    <div className="w-full">
+      <div className="grid-background"></div>
+      <HeroSection />
+    </div>
+  );
 }
