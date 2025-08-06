@@ -1,4 +1,4 @@
-import { Features, HeroSection } from "@/components/landing";
+import { Features, HeroSection, Statistics } from "@/components/landing";
 
 export default function Home() {
   return (
@@ -6,6 +6,7 @@ export default function Home() {
       <div className="grid-background"></div>
       <HeroSection />
       <Features />
+      <Statistics />
     </div>
   );
 }
