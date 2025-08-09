@@ -2,6 +2,7 @@ import {
   Features,
   HeroSection,
   Statistics,
+  Testimonials,
   UserGuide,
 } from "@/components/landing";
 
@@ -13,6 +14,7 @@ export default function Home() {
       <Features />
       <Statistics />
       <UserGuide />
+      <Testimonials />
     </div>
   );
 }
