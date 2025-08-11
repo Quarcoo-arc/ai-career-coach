@@ -1,4 +1,5 @@
 import {
+  Faqs,
   Features,
   HeroSection,
   Statistics,
@@ -15,6 +16,7 @@ export default function Home() {
       <Statistics />
       <UserGuide />
       <Testimonials />
+      <Faqs />
     </div>
   );
 }
