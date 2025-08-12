@@ -1,4 +1,5 @@
 import {
+  Cta,
   Faqs,
   Features,
   HeroSection,
@@ -17,6 +18,7 @@ export default function Home() {
       <UserGuide />
       <Testimonials />
       <Faqs />
+      <Cta />
     </div>
   );
 }
