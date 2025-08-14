@@ -13,3 +13,93 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id String @id @default(uuid())
+  clerkUserId String @unique
+  email String @unique
+  name String?
+  imageUrl String?
+  industry String? // <industry>-<subindustry>
+  industryInsight IndustryInsight? @relation(fields: [industry], references: [id])
+  
+  // Profile Information
+  bio String?
+  yearsOfExperience Int?
+  skills String[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationships
+  assessmentResults AssessmentResult[]
+  resume Resume?
+  coverLetters CoverLetter[]
+}
+
+model AssessmentResult {
+  id String @id @default(cuid())
+  userId String
+  score Float // Overall score for the assessment
+  questions Json[] // Array of {question, answer, userAnswer, isCorrect}
+  category String // Category of the assessment (e.g., "Technical", "Soft Skills")
+  feedback String? // AI-generated feedback
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+  @@index([userId])
+}
+model Resume {
+  id String @id @default(cuid())
+  userId String @unique
+  content String @db.Text // Markdown
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+model CoverLetter {
+  id String @id @default(cuid())
+  userId String
+  content String // Markdown
+  jobDescription String?
+  jobTitle String
+  companyName String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id])
+  @@index([userId])
+}
+
+model IndustryInsight {
+  id String @id @default(cuid())
+  industry String @unique // <industry>-<subindustry> eg tech-software-development
+  salaryRanges Json[] // Array of {role: string, min: float, max: float, median: float, location: string?}
+  // Industry Trends
+  growthRate Float // Annual growth rate in percentage
+  demandLevel DemandLevel
+  topSkills String[] // Array of skills relevant to the industry
+  // Market Conditions
+  marketOutlook MarketOutlook
+  trends String[] // Array of current trends in the industry
+  // Learning Suggestions
+  recommendedSkills String[] // Array of skills to learn
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nextUpdate DateTime // Scheduled next update for the insight
+  users User[]
+  @@index([industry])
+}
+
+enum DemandLevel {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum MarketOutlook {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
