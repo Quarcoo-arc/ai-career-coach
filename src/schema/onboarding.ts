@@ -1,13 +1,21 @@
 import { z } from "zod";
 
 export const onboardingSchema = z.object({
-  industry: z.string({ error: "Industry is required" }),
-  subIndustry: z.string({ error: "Sub-industry is required" }),
-  bio: z.string().max(500, "Bio must be at most 500 characters").optional(),
+  industry: z.string({ error: "Please select an industry" }),
+  subIndustry: z.string({ error: "Please select a specialization" }),
+  bio: z.string().max(500, "Bio cannot exceed 500 characters").optional(),
   yearsOfExperience: z
-    .number({ error: "Years of experience must be a number" })
-    .min(0, "Years of experience must be at least 0")
-    .max(50, "Years of experience must be at most 50"),
+    .string()
+    .transform((val) => parseInt(val, 10))
+    .pipe(
+      z
+        .number({
+          error:
+            "Please enter the number of years of experience you have in the selected industry",
+        })
+        .min(0, "Years of experience must be at least 0")
+        .max(50, "Years of experience cannot exceed 50")
+    ),
   skills: z
     .string()
     .transform((val) =>
@@ -20,3 +28,5 @@ export const onboardingSchema = z.object({
     )
     .optional(),
 });
+
+export type OnboardingFormInputs = z.infer<typeof onboardingSchema>;
