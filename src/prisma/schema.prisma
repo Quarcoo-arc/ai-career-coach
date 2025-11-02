@@ -21,7 +21,7 @@ model User {
   name String?
   imageUrl String?
   industry String? // <industry>-<subindustry>
-  industryInsight IndustryInsight? @relation(fields: [industry], references: [id])
+  industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])
   
   // Profile Information
   bio String?
