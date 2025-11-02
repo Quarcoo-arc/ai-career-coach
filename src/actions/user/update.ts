@@ -1,15 +1,11 @@
 "use server";
 import prisma from "@/lib/prisma";
+import { UpdateUserData, UpdateUserReturnType } from "@/types/updateUserTypes";
 import { auth } from "@clerk/nextjs/server";
 
-type UpdateUserData = {
-  industry: string;
-  yearsOfExperience: number;
-  bio: string;
-  skills: string[];
-};
-
-export const updateUser = async (data: UpdateUserData) => {
+export const updateUser = async (
+  data: UpdateUserData
+): Promise<UpdateUserReturnType> => {
   const { userId } = await auth();
   if (!userId) throw new Error("User not authenticated");
 
@@ -54,13 +50,10 @@ export const updateUser = async (data: UpdateUserData) => {
       },
       { timeout: 10000 }
     ); // 10 seconds timeout, default is 5 seconds
-    return result.user;
+    return { success: true, ...result.user };
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error updating user:", error.message);
-    } else {
-      console.error("Unknown error updating user");
-    }
-    throw new Error("Failed to update user details");
+    const err = error instanceof Error ? error : Error(error as string);
+    console.error("Error updating user:", err.message);
+    throw new Error("Failed to update user profile");
   }
 };
