@@ -5,22 +5,27 @@ export const getOnboardingStatus = async () => {
   const { userId } = await auth();
   if (!userId) throw new Error("User not authenticated");
 
-  const user = await prisma.user.findUnique({
-    where: { clerkUserId: userId },
-    select: {
-      industry: true,
-      yearsOfExperience: true,
-      bio: true,
-      skills: true,
-    },
-  });
-  if (!user) throw new Error("User not found");
+  try {
+    const user = await prisma.user.findUnique({
+      where: { clerkUserId: userId },
+      select: {
+        industry: true,
+        yearsOfExperience: true,
+        bio: true,
+        skills: true,
+      },
+    });
+    if (!user) throw new Error("User not found");
 
-  const isOnboarded =
-    !!user.industry &&
-    user.yearsOfExperience !== null &&
-    !!user.bio &&
-    user.skills.length > 0;
+    const isOnboarded =
+      !!user.industry &&
+      user.yearsOfExperience !== null &&
+      user.skills.length > 0;
 
-  return { isOnboarded, user };
+    return { isOnboarded, user };
+  } catch (err) {
+    const error = err instanceof Error ? err : Error(err as string);
+    console.error("Error fetching user onboarding status:", error.message);
+    throw new Error("Failed to fetch user onboarding status");
+  }
 };

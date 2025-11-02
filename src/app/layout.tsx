@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Footer, Header } from "@/components/layout";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Toaster } from "@/components/ui/sonner";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -33,6 +34,7 @@ export default function RootLayout({
           >
             <Header />
             <main className="min-h-dvh flex pt-20 pb-10">{children}</main>
+            <Toaster richColors />
             <Footer />
           </ThemeProvider>
         </body>

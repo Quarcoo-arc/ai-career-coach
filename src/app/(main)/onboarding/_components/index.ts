@@ -1,3 +1,3 @@
-import OnboardingForm from "./onboarding-form";
+import OnboardingForm from "./OnboardingForm";
 
 export { OnboardingForm };

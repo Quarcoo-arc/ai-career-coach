@@ -1,6 +1,6 @@
 "use client";
 import { Industries, Industry } from "@/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { OnboardingFormInputs, onboardingSchema } from "@/schema/onboarding";
@@ -23,6 +23,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Loader } from "lucide-react";
+import { toast } from "sonner";
+import { UpdateUserData, UpdateUserReturnType } from "@/types/updateUserTypes";
+import { useFetch } from "@/hooks";
 
 interface OnboardingFormProps {
   industries: Industries;
@@ -31,6 +35,14 @@ interface OnboardingFormProps {
 const OnboardingForm = ({ industries }: OnboardingFormProps) => {
   const [selectedIndustry, setSelectedIndustry] = useState<Industry>();
   const router = useRouter();
+
+  const {
+    loading: updateUserLoading,
+    error,
+    fn: updateUserFn,
+    data: updateUserResult,
+  } = useFetch<UpdateUserReturnType, UpdateUserData>("/api/user/update");
+
   const {
     register,
     handleSubmit,
@@ -42,8 +54,24 @@ const OnboardingForm = ({ industries }: OnboardingFormProps) => {
   });
 
   const onSubmit = async (values: OnboardingFormInputs) => {
-    console.log(values);
+    const industry = `${values.industry}-${values.subIndustry
+      .toLowerCase()
+      .replace(/ /g, "-")}`;
+
+    await updateUserFn({ ...values, industry });
   };
+
+  useEffect(() => {
+    if (updateUserResult?.success && !updateUserLoading) {
+      toast.success("Profile completed successfully!");
+      router.push("/dashboard");
+      router.refresh();
+    }
+  }, [updateUserResult, updateUserLoading, router]);
+
+  useEffect(() => {
+    if (error) toast.error(error);
+  }, [error]);
 
   const watchIndustry = watch("industry");
 
@@ -159,8 +187,19 @@ const OnboardingForm = ({ industries }: OnboardingFormProps) => {
               )}
             </div>
 
-            <Button type="submit" className="w-full">
-              Submit Profile
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={updateUserLoading}
+            >
+              {updateUserLoading ? (
+                <>
+                  <Loader className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Submit Profile"
+              )}
             </Button>
           </form>
         </CardContent>
