@@ -40,8 +40,8 @@ function useFetch<T, D>(
         });
 
         if (!res.ok) {
-          const text = await res.text();
-          throw new Error(text || `Request failed: ${res.status}`);
+          const error = await res.json();
+          throw new Error(error?.message || `Request failed: ${res.status}`);
         }
 
         const json = await res.json();

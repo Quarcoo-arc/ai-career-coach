@@ -2,6 +2,7 @@
 import prisma from "@/lib/prisma";
 import { UpdateUserData, UpdateUserReturnType } from "@/types/updateUserTypes";
 import { auth } from "@clerk/nextjs/server";
+import { generateAiInsights } from "../industryInsights/getIndustryInsights";
 
 export const updateUser = async (
   data: UpdateUserData
@@ -22,18 +23,14 @@ export const updateUser = async (
         });
 
         if (!industryInsight) {
-          industryInsight = await tx.industryInsight.create({
+          const insights = await generateAiInsights(data.industry);
+
+          industryInsight = await prisma.industryInsight.create({
             data: {
               industry: data.industry,
-              salaryRanges: [],
-              growthRate: 0,
-              demandLevel: "MEDIUM",
-              topSkills: [],
-              marketOutlook: "NEUTRAL",
-              trends: [],
-              recommendedSkills: [],
-              nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-            }, // next update in 7 days
+              ...insights,
+              nextUpdate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // update in 7 days
+            },
           });
         }
 
@@ -48,12 +45,12 @@ export const updateUser = async (
         });
         return { user: updatedUser, industryInsight };
       },
-      { timeout: 10000 }
-    ); // 10 seconds timeout, default is 5 seconds
+      { timeout: 15000 }
+    ); // 15 seconds timeout, default is 5 seconds
     return { success: true, ...result.user };
   } catch (error) {
     const err = error instanceof Error ? error : Error(error as string);
     console.error("Error updating user:", err.message);
-    throw new Error("Failed to update user profile");
+    throw new Error("Failed to update user profile: " + err.message);
   }
 };
