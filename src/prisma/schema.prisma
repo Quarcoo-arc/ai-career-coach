@@ -42,7 +42,7 @@ model AssessmentResult {
   userId String
   score Float // Overall score for the assessment
   questions Json[] // Array of {question, answer, userAnswer, isCorrect}
-  category String // Category of the assessment (e.g., "Technical", "Soft Skills")
+  category AssessmentCategory
   feedback String? // AI-generated feedback
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,6 +90,11 @@ model IndustryInsight {
   nextUpdate DateTime // Scheduled next update for the insight
   users User[]
   @@index([industry])
+}
+
+enum AssessmentCategory {
+  TECHNICAL
+  BEHAVIORAL
 }
 
 enum DemandLevel {
