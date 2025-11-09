@@ -1,14 +1,9 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { GoogleGenAI } from "@google/genai";
+import { genAi } from "@/lib/genAI";
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-
-const genAi = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-
-export const generateAiInsights = async (industry: string) => {
-  const prompt = `
+export const getInsightGenerationPrompt = async (industry: string) => `
           Analyze the current state of the ${industry} industry and provide insights in ONLY the following JSON format without any additional notes or explanations:
           {
             "salaryRanges": [
@@ -28,12 +23,13 @@ export const generateAiInsights = async (industry: string) => {
           Include at least 5 skills and trends.
     `;
 
+export const generateAiInsights = async (industry: string) => {
+  const prompt = await getInsightGenerationPrompt(industry);
   const response = await genAi.models.generateContent({
     model: "gemini-2.5-flash",
     contents: prompt,
   });
   const text = response.text;
-  console.log({ text });
   const cleanedText = text?.replace(/```(?:json)?\n?/g, "").trim();
 
   return JSON.parse(cleanedText ?? "{}");
