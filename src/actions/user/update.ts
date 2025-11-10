@@ -8,7 +8,7 @@ export const updateUser = async (
   data: UpdateUserData
 ): Promise<UpdateUserReturnType> => {
   const { userId } = await auth();
-  if (!userId) throw new Error("User not authenticated");
+  if (!userId) throw new Error("Unauthorized");
 
   const user = await prisma.user.findUnique({
     where: { clerkUserId: userId },

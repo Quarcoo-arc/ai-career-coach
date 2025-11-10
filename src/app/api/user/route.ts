@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { updateUser } from "@/actions/user";
 
-export async function POST(req: Request) {
+export async function PUT(req: Request) {
   try {
     const data = await req.json();
     const result = await updateUser(data);

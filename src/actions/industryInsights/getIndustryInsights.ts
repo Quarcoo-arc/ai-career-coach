@@ -37,7 +37,7 @@ export const generateAiInsights = async (industry: string) => {
 
 export const getUserIndustryInsights = async () => {
   const { userId } = await auth();
-  if (!userId) throw new Error("User not authenticated");
+  if (!userId) throw new Error("Unauthorized");
 
   const user = await prisma.user.findUnique({
     where: { clerkUserId: userId },

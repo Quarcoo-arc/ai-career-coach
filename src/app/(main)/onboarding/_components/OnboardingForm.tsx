@@ -41,7 +41,9 @@ const OnboardingForm = ({ industries }: OnboardingFormProps) => {
     error,
     fn: updateUserFn,
     data: updateUserResult,
-  } = useFetch<UpdateUserReturnType, UpdateUserData>("/api/user/update");
+  } = useFetch<UpdateUserReturnType, UpdateUserData>("/api/user", {
+    method: "PUT",
+  });
 
   const {
     register,

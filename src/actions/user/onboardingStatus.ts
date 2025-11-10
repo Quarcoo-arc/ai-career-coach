@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export const getOnboardingStatus = async () => {
   const { userId } = await auth();
-  if (!userId) throw new Error("User not authenticated");
+  if (!userId) throw new Error("Unauthorized");
 
   try {
     const user = await prisma.user.findUnique({
