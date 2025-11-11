@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, Dispatch, SetStateAction } from "react";
 
 interface UseFetchOptions {
   method?: "GET" | "POST" | "PUT" | "DELETE";
@@ -10,12 +10,13 @@ interface UseFetchReturn<T, D> {
   error: string | null;
   loading: boolean;
   fn: (data?: D) => Promise<void>;
+  setData: Dispatch<SetStateAction<T | null>>;
 }
 
 /**
  * Generic React hook for making API route calls from client components.
  * Example:
- * const { fn, loading, data, error } = useFetch("/api/user/update", { method: "POST" });
+ * const { fn, loading, data, error } = useFetch("/api/user", { method: "POST" });
  */
 function useFetch<T, D>(
   url: string,
@@ -57,7 +58,7 @@ function useFetch<T, D>(
     [url, options.method, options.headers]
   );
 
-  return { data, error, loading, fn };
+  return { data, error, loading, fn, setData };
 }
 
 export default useFetch;

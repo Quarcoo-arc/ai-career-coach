@@ -121,7 +121,7 @@ export const saveAssessmentResult = async (
       data: {
         userId: user.id,
         score: score,
-        questions: questions,
+        questions: results,
         category: "TECHNICAL",
         feedback,
       },
