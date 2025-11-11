@@ -133,3 +133,30 @@ export const saveAssessmentResult = async (
     throw new Error("Failed to save assessment result");
   }
 };
+
+export const getAssessmentResults = async () => {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await prisma.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  try {
+    const assessmentResults = await prisma.assessmentResult.findMany({
+      where: {
+        userId: user.id,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+    });
+
+    return assessmentResults;
+  } catch (error) {
+    console.error("Error fetching assessments: ", error);
+    throw new Error("Failed to fetch assessments");
+  }
+};
