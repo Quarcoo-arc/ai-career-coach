@@ -8,7 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { AssessmentResult } from "@/generated/prisma";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -79,7 +84,13 @@ const AssessmentList = ({
         open={!!selectedAssessment}
         onOpenChange={() => setSelectedAssessment(null)}
       >
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent
+          aria-describedby={undefined}
+          className="max-w-3xl max-h-[90vh] overflow-y-auto"
+        >
+          <DialogHeader>
+            <DialogTitle></DialogTitle>
+          </DialogHeader>
           <AssessmentResultComponent
             result={selectedAssessment!}
             hideStartNew
