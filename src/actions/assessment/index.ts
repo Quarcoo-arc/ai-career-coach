@@ -109,7 +109,6 @@ export const saveAssessmentResult = async (
         contents: prompt,
       });
       feedback = response.text?.trim() || "";
-      console.log({ improvementTip: feedback });
     } catch (error) {
       console.error("Error generating improvement tip: ", error);
     }
