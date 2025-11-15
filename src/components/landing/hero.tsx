@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import GitHubIcon from "@/assets/svg/github.svg";
 
 const HeroSection = () => {
   const imageRef = useRef<HTMLDivElement | null>(null);
@@ -46,9 +47,12 @@ const HeroSection = () => {
               Get Started
             </Button>
           </Link>
-          <Link href="https://github.com/Quarcoo-arc/ai-career-coach">
+          <Link
+            target="_blank"
+            href="https://github.com/Quarcoo-arc/ai-career-coach"
+          >
             <Button size={"lg"} className="px-8" variant={"outline"}>
-              Get Started
+              View on GitHub <GitHubIcon fill="white" />
             </Button>
           </Link>
         </div>

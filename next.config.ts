@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "randomuser.me" }],
   },
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.tsx",
+      },
+    },
+  },
 };
 
 export default nextConfig;
