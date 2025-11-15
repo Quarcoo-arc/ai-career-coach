@@ -15,10 +15,11 @@ A high-level view of the repository and where to find the main pieces of functio
         ├── globals.css          - Tailwind base + global styles
     ├──components/
         ├── ui/                  - shadcn/ui wrappers and shared UI primitives
-        ├── common/              - smaller reusable components (Avatar, Card, Form)
+        ├── layout/              - layout components (Header, Footer)
+        ├── landing/             - landing page sections
     ├──lib/
-        ├── ai.ts                - Gemini request helpers
-        ├── inngest.ts           - Inngest client & workflow helpers
+        ├── genAi.ts             - Gemini SDK entry point
+        ├── inngest/             - Inngest client & workflow helpers
         ├── prisma.ts            - Prisma client wrapper
         ├── auth.ts              - Clerk helper utilities
     ├──prisma/
