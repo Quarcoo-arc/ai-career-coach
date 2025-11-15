@@ -4,11 +4,11 @@ import StatsCard from "./_components/stats-card";
 import PerformanceChart from "./_components/performance-chart";
 import AssessmentList from "./_components/assessment-list";
 
-const Interview = async () => {
+const InterviewPage = async () => {
   const assessments = await getAssessmentResults();
 
   return (
-    <div>
+    <>
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-6xl font-bold gradient-title">
           Interview Preparation
@@ -19,8 +19,8 @@ const Interview = async () => {
         <PerformanceChart assessments={assessments} />
         <AssessmentList assessments={assessments} />
       </div>
-    </div>
+    </>
   );
 };
 
-export default Interview;
+export default InterviewPage;

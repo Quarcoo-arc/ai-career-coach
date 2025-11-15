@@ -8,7 +8,7 @@ import {
   UserGuide,
 } from "@/components/landing";
 
-export default function Home() {
+export default function LandingPage() {
   return (
     <div className="w-full">
       <div className="grid-background"></div>

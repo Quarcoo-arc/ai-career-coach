@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import Assessment from "../_components/assessment";
 
-const MockInterview = () => {
+const MockInterviewPage = () => {
   return (
     <div className="container mx-auto space-y-4 py-6">
       <div className="flex flex-col space-y-2 mx-2">
@@ -28,4 +28,4 @@ const MockInterview = () => {
   );
 };
 
-export default MockInterview;
+export default MockInterviewPage;
