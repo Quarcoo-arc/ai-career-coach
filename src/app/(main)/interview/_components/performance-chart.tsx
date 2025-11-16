@@ -74,7 +74,7 @@ const PerformanceChart = ({
               <Line
                 type="monotone"
                 dataKey="score"
-                stroke="hsl(var(--primary))"
+                stroke="white"
                 strokeWidth={2}
               />
             </LineChart>
