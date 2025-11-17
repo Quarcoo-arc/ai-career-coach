@@ -46,6 +46,7 @@ A high-level view of the repository and where to find the main pieces of functio
 - Prisma — ORM for schema and migrations.
 - Inngest — workflows and background job orchestration.
 - Gemini API — For AI insights. Configure via environment variable.
+- Puppeteer — generate downloadable pdf from html/markdown.
 
 ## Requirements
 
